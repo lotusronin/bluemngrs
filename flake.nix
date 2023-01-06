@@ -22,10 +22,12 @@
             bluez
           ];
           LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";
-	  BINDGEN_EXTRA_CLANG_ARGS = 
+          BINDGEN_EXTRA_CLANG_ARGS = 
           [
-             ''-I"${pkgs.bluez.dev}/include"''
-             ''$NIX_CFLAGS_COMPILE''
+             ''-I"${pkgs.bluez.dev}/include" ''
+            (nixpkgs.lib.removeSuffix "\n" (builtins.readFile "${pkgs.llvmPackages_11.clang}/nix-support/cc-cflags"))
+            (nixpkgs.lib.removeSuffix "\n" (builtins.readFile "${pkgs.llvmPackages_11.clang}/nix-support/libc-cflags"))
+            (nixpkgs.lib.removeSuffix "\n" (builtins.readFile "${pkgs.llvmPackages_11.clang}/nix-support/libcxx-cxxflags"))
           ];
         };
       }
